@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using sistemaWeb_ventasOnline;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AplicacionDBContext>(opc =>
+opc.UseSqlServer("name=MyConnectionTrust"));
 
 var app = builder.Build();
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\finalDesarrollo\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj": {}
+    "C:\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj": {}
   },
   "projects": {
-    "C:\\finalDesarrollo\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj": {
+    "C:\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\finalDesarrollo\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj",
+        "projectUniqueName": "C:\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj",
         "projectName": "sistemaWeb_ventasOnline",
-        "projectPath": "C:\\finalDesarrollo\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj",
+        "projectPath": "C:\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline.csproj",
         "packagesPath": "C:\\Users\\1136962295\\.nuget\\packages\\",
-        "outputPath": "C:\\finalDesarrollo\\sistemaWeb_ventasOnline\\obj\\",
+        "outputPath": "C:\\sistemaWeb_ventasOnline\\sistemaWeb_ventasOnline\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,28 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
