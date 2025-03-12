@@ -1,0 +1,19 @@
+@model sistemaWeb_ventasOnline.Entidades.Categoria
+
+@{
+    ViewData["Title"] = "Editar Categoría";
+}
+
+<h2>Editar Categoría</h2>
+
+<form asp-action="EditarCategoria" method="post">
+    <input type="hidden" asp-for="idCategoria" />
+
+    <div class="form-group">
+        <label for="nombre">Nombre de la Categoría</label>
+        <input asp-for="nombre" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a asp-action="ListaCategorias" class="btn btn-secondary">Cancelar</a>
+</form>

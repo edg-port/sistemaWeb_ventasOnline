@@ -1,0 +1,36 @@
+@model IEnumerable<sistemaWeb_ventasOnline.Entidades.Producto>
+
+<h2>Lista de Productos</h2>
+<a asp-action="AgregarProducto" class="btn btn-success">Añadir Nuevo Producto</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Producto in Model)
+        {
+            <tr>
+                <td><img src="@Producto.ImagenUrl" alt="Imagen Producto" width="100"></td>
+                <td>@Producto.nombre</td>
+                <td>@Producto.precio</td>
+                <td>@Producto.cantidad</td>
+                <td>@Producto.Categoria?.nombre</td>
+                <td>
+                    <a asp-action="EditarProducto" asp-route-id="@Producto.idProducto" class="btn btn-primary">Editar</a>
+                    <form asp-action="EliminarProducto" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@Producto.idProducto" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este Producto?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,33 @@
+@model IEnumerable<sistemaWeb_ventasOnline.Entidades.Categoria>
+
+@{
+    ViewData["Title"] = "Lista de Categorías";
+}
+
+<h2>Lista de Categorías</h2>
+
+<a asp-action="AgregarCategoria" class="btn btn-success">Añadir Nueva Categoría</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.nombre</td>
+                <td>
+                    <a asp-action="EditarCategoria" asp-route-id="@categoria.idCategoria" class="btn btn-primary">Editar</a>
+                    <form asp-action="EliminarCategoria" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@categoria.idCategoria" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?');">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

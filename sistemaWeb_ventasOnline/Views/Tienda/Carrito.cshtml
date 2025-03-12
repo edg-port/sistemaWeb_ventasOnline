@@ -1,0 +1,108 @@
+@model List<sistemaWeb_ventasOnline.Entidades.Producto>
+
+@{
+    ViewData["Title"] = "Carrito de Compras";
+}
+
+<div class="container">
+    <p class="cart-title">Carrito</p>
+
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@producto.ImagenUrl" class="product-img"> @producto.nombre
+                </td>
+                <td>$@producto.precio.ToString("0.00")</td>
+                <td><input type="number" value="@producto.cantidad" min="1" style="width: 40px;"></td>
+                <td>$@(producto.precio * producto.cantidad)</td>
+            </tr>
+        }
+    </table>
+
+    <br>
+    <button class="btn">Actualizar</button>
+    <input type="text" placeholder="Código de cupón">
+    <button class="btn">Aplicar Cupón</button>
+    
+    <br><br>
+    <div class="cart-summary">
+        <p class="total-title">Totales del carrito</p>
+        <p>Subtotal: $@(Model.Sum(p => p.precio * p.cantidad))</p>
+        <p>Envío: <span style="color: red;">Calcular envío</span></p>
+        <p>Total: $@(Model.Sum(p => p.precio * p.cantidad))</p>
+        <a href="@Url.Action("FinalizarCompra", "Tienda")" class="btn">Finalizar Compra</a>
+        <div class="paypal-btn">PayPal</div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+    }
+
+    .cart-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d28b8b;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .product-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .btn {
+        background-color: #f5d78e;
+        padding: 8px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        width: 40%;
+    }
+
+    .total-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #d28b8b;
+    }
+
+    .paypal-btn {
+        background-color: #ffcc00;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        color: #003087;
+    }
+</style>
+ 
+ 

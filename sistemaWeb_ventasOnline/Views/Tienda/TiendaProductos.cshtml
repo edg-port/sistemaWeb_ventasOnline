@@ -1,0 +1,91 @@
+@model List<sistemaWeb_ventasOnline.Entidades.Producto>
+
+@{
+    ViewData["Title"] = "Tienda";
+    var categorias = ViewData["Categorias"] as List<sistemaWeb_ventasOnline.Entidades.Categoria>;
+}
+
+<div class="contenedor-tienda">
+    <aside class="filtro-categorias">
+        <h3>Buscar</h3>
+        <form method="get" action="@Url.Action("TiendaProductos", "Tienda")">
+            <input type="text" name="busqueda" placeholder="Buscar producto..." value="@ViewData["Busqueda"]">
+            <button type="submit">Buscar</button>
+        </form>
+        
+        <h3>Categorías</h3>
+        <ul>
+            <li><a href="@Url.Action("TiendaProductos", "Tienda")">Todas</a></li>
+            @if (categorias != null)
+            {
+                @foreach (var categoria in categorias)
+                {
+                    <li>
+                        <a href="@Url.Action("TiendaProductos", "Tienda", new { categoriaId = categoria.idCategoria })">
+                            @categoria.nombre (@(categoria.Producto?.Count ?? 0))
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </aside>
+    
+    <section class="productos">
+        <h1 class="titulo-tienda">Tienda</h1>
+        <div class="productos-container">
+            @foreach (var producto in Model)
+            {
+                <div class="producto-card">
+                    <a href="@Url.Action("CompraDirecta", "Tienda", new { id = producto.idProducto })">
+                        <img src="@producto.ImagenUrl" alt="@producto.nombre" class="producto-imagen">
+                    </a>
+                    <h3>@producto.nombre</h3>
+                    <p class="categoria">@producto.Categoria.nombre</p>
+                    <p class="precio">$@producto.precio.ToString("0.00")</p>
+                    <button class="boton-agregar-carrito" data-id="@producto.idProducto">Añadir al Carrito</button>
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+<script>
+    document.querySelectorAll('.boton-agregar-carrito').forEach(button => {
+        button.addEventListener('click', function () {
+            let idProducto = this.getAttribute('data-id');
+            fetch('/Tienda/AgregarAlCarrito?id=' + idProducto, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('contador-carrito').innerText = data.cantidadTotal;
+                    alert('Producto añadido al carrito');
+                });
+        });
+    });
+</script>
+
+<style>
+    .contenedor-tienda {
+        display: flex;
+    }
+    .filtro-categorias {
+        width: 20%;
+        padding: 15px;
+        border-right: 1px solid #ddd;
+    }
+    .productos {
+        width: 80%;
+        padding: 20px;
+    }
+    .productos-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .producto-card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>

@@ -12,8 +12,8 @@ using sistemaWeb_ventasOnline;
 namespace sistemaWeb_ventasOnline.Migrations
 {
     [DbContext(typeof(AplicacionDBContext))]
-    [Migration("20250227185716_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250307192504_initialMigrations")]
+    partial class initialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,6 +136,9 @@ namespace sistemaWeb_ventasOnline.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idProducto"));
+
+                    b.Property<string>("ImagenUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("cantidad")
                         .HasColumnType("int");

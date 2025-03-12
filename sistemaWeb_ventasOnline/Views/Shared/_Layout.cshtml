@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">sistemaWeb_ventasOnline</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">YoiteMarket</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,14 +21,40 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Menu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tienda" asp-action="TiendaProductos">Tienda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Reportes" asp-action="ReporteVentas">Reporte de Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Inventario" asp-action="ListaInventario">Administrar Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Categorias" asp-action="ListaCategorias">Categorías</a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
                         </li>
+                        <a href="@Url.Action("Carrito", "Tienda")"> Carrito (<span id="contador-carrito">0</span>)</a>
+
+                            <script>
+                                window.onload = function () {
+                                    fetch('/Tienda/Carrito')
+                                        .then(response => response.text())
+                                        .then(html => {
+                                            let parser = new DOMParser();
+                                            let doc = parser.parseFromString(html, 'text/html');
+                                            let cantidad = doc.querySelectorAll('table tr').length - 1; 
+                                            document.getElementById('contador-carrito').innerText = cantidad;
+                                        });
+                                };
+                            </script>
                     </ul>
                 </div>
             </div>

@@ -14,6 +14,7 @@ namespace sistemaWeb_ventasOnline.Entidades
         public int idProducto { get; set; } //Llave primaria
         public string nombre { get; set; }
         public decimal precio { get; set; }
+        public string? ImagenUrl { get; set; }
         public int cantidad { get; set; }
         [ForeignKey("Categoria")]
         public int idCategoria { get; set; } //Llave foranea

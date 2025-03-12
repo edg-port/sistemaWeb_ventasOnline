@@ -1,0 +1,104 @@
+@model sistemaWeb_ventasOnline.Entidades.Producto
+
+@{
+    ViewData["Title"] = "Comprar " + Model.nombre;
+}
+
+<div class="compra-container">
+    <img src="@Model.ImagenUrl" alt="@Model.nombre" class="compra-imagen">
+    <div class="compra-info">
+        <h1>@Model.nombre</h1>
+        <p class="precio">$@Model.precio.ToString("0.00")</p>
+        <p class="stock">Stock disponible: @Model.cantidad</p>
+    </div>
+</div>
+        <form method="post" action="@Url.Action("FinalizarCompra", "Tienda")">
+            <input type="hidden" name="id" value="@Model.idProducto">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="@Model.cantidad" class="cantidad-input" required>
+            <button type="submit" class="boton-comprar">Finalizar Compra</button>
+        </form>
+<style>
+    .compra-container {
+        display: flex;
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        gap: 20px;
+        align-items: center;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .compra-imagen {
+        width: 50%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .compra-info {
+        flex: 1;
+        text-align: left;
+    }
+
+    .categoria {
+        font-size: 16px;
+        color: #999;
+    }
+
+    .precio {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d292a0;
+    }
+
+    .stock {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .cantidad-input {
+        width: 60px;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .boton-comprar {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #e6b8c7;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .boton-comprar:hover {
+        background-color: #d292a0;
+    }
+
+    .volver {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #d292a0;
+        text-decoration: none;
+    }
+
+    .volver:hover {
+        text-decoration: underline;
+    }
+</style>

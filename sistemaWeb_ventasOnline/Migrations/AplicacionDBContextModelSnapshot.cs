@@ -134,6 +134,9 @@ namespace sistemaWeb_ventasOnline.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idProducto"));
 
+                    b.Property<string>("ImagenUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("cantidad")
                         .HasColumnType("int");
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace sistemaWeb_ventasOnline.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,7 @@ namespace sistemaWeb_ventasOnline.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImagenUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     cantidad = table.Column<int>(type: "int", nullable: false),
                     idCategoria = table.Column<int>(type: "int", nullable: false)
                 },
