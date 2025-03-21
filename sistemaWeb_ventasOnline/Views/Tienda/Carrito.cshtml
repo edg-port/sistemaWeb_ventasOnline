@@ -7,41 +7,92 @@
 <div class="container">
     <p class="cart-title">Carrito</p>
 
-    <table>
+    <table id="tabla-carrito">
         <tr>
             <th>Producto</th>
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Subtotal</th>
+            <th></th>
         </tr>
         @foreach (var producto in Model)
         {
-            <tr>
+            <tr id="fila-@producto.idProducto">
                 <td>
                     <img src="@producto.ImagenUrl" class="product-img"> @producto.nombre
                 </td>
                 <td>$@producto.precio.ToString("0.00")</td>
-                <td><input type="number" value="@producto.cantidad" min="1" style="width: 40px;"></td>
-                <td>$@(producto.precio * producto.cantidad)</td>
+                <td>
+                    <input type="number" class="cantidad" data-id="@producto.idProducto" value="@producto.cantidad" min="1" style="width: 50px;">
+                </td>
+                <td class="subtotal" id="subtotal-@producto.idProducto">$@(producto.precio * producto.cantidad)</td>
+                <td>
+                    <button class="btn eliminar" data-id="@producto.idProducto">Eliminar</button>
+                </td>
             </tr>
         }
     </table>
 
     <br>
-    <button class="btn">Actualizar</button>
     <input type="text" placeholder="Código de cupón">
     <button class="btn">Aplicar Cupón</button>
-    
+
     <br><br>
     <div class="cart-summary">
         <p class="total-title">Totales del carrito</p>
-        <p>Subtotal: $@(Model.Sum(p => p.precio * p.cantidad))</p>
+        <p>Subtotal: <span id="subtotal-general">$@(Model.Sum(p => p.precio * p.cantidad))</span></p>
         <p>Envío: <span style="color: red;">Calcular envío</span></p>
-        <p>Total: $@(Model.Sum(p => p.precio * p.cantidad))</p>
-        <a href="@Url.Action("FinalizarCompra", "Tienda")" class="btn">Finalizar Compra</a>
+        <p>Total: <span id="total-general">$@(Model.Sum(p => p.precio * p.cantidad))</span></p>
+
+        <form id="formFinalizarCompra" method="post" action="@Url.Action("FinalizarCompra", "Tienda")">
+            <button type="submit" class="btn">Finalizar Compra</button>
+        </form>
+
         <div class="paypal-btn">PayPal</div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".cantidad").forEach(input => {
+            input.addEventListener("change", function () {
+                let id = this.dataset.id;
+                let cantidad = this.value;
+                if (cantidad < 1) cantidad = 1;
+
+                fetch(`/Tienda/ActualizarCantidad?id=${id}&cantidad=${cantidad}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById(`subtotal-${id}`).innerText = `$${data.subtotal}`;
+                        document.getElementById("subtotal-general").innerText = `$${data.total}`;
+                        document.getElementById("total-general").innerText = `$${data.total}`;
+                    });
+            });
+        });
+
+        document.querySelectorAll(".eliminar").forEach(button => {
+            button.addEventListener("click", function () {
+                let id = this.dataset.id;
+
+                fetch(`/Tienda/EliminarDelCarrito?id=${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById(`fila-${id}`).remove();
+                        document.getElementById("subtotal-general").innerText = `$${data.total}`;
+                        document.getElementById("total-general").innerText = `$${data.total}`;
+                    });
+            });
+        });
+
+        document.getElementById("formFinalizarCompra").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (confirm("¿Estás seguro de que deseas finalizar la compra?")) {
+            this.submit();
+        }
+    });
+    });
+</script>
 
 <style>
     body {
@@ -104,5 +155,6 @@
         color: #003087;
     }
 </style>
+
  
  

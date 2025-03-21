@@ -82,39 +82,82 @@ namespace sistemaWeb_ventasOnline.Controllers
         }
 
         // Finalizar compra directa
+        [HttpPost]
         public IActionResult FinalizarCompraDirecta(int id, int cantidad)
         {
             var producto = _context.Producto.FirstOrDefault(p => p.idProducto == id);
-            if (producto != null && producto.cantidad >= cantidad)
+            if (producto == null)
             {
-                producto.cantidad -= cantidad;
-                _context.SaveChanges();
+                return NotFound();
             }
 
-            return RedirectToAction("TiendaProductos");
+            if (cantidad <= 0 || cantidad > producto.cantidad)
+            {
+                TempData["Error"] = "Cantidad no válida.";
+                return RedirectToAction("CompraDirecta", new { id });
+            }
+
+            producto.cantidad -= cantidad;
+            _context.SaveChanges();
+
+            TempData["Mensaje"] = "¡Compra realizada con éxito!";
+            return RedirectToAction("CompraExitosa");
         }
 
+        public IActionResult CompraExitosa()
+        {
+            return View();
+        }
+
+
         // Finalizar compra desde el carrito
+       [HttpPost]
         public IActionResult FinalizarCompra()
         {
-            List<Producto> carrito = HttpContext.Session.GetObjectFromJson<List<Producto>>("Carrito");
+            List<Producto> carrito = HttpContext.Session.GetObjectFromJson<List<Producto>>("Carrito") ?? new List<Producto>();
 
-            if (carrito != null && carrito.Count > 0)
+            foreach (var item in carrito)
             {
-                foreach (var item in carrito)
+                var producto = _context.Producto.FirstOrDefault(p => p.idProducto == item.idProducto);
+                if (producto != null)
                 {
-                    var producto = _context.Producto.FirstOrDefault(p => p.idProducto == item.idProducto);
-                    if (producto != null && producto.cantidad >= item.cantidad)
-                    {
-                        producto.cantidad -= item.cantidad;
-                    }
+                    producto.cantidad -= item.cantidad;
                 }
-
-                _context.SaveChanges();
-                HttpContext.Session.Remove("Carrito"); // Vaciar carrito después de la compra
             }
 
-            return RedirectToAction("TiendaProductos");
+            _context.SaveChanges();
+
+            HttpContext.Session.Remove("Carrito");
+
+            return RedirectToAction("CompraExitosa");
+        }
+        public IActionResult ActualizarCantidad(int id, int cantidad)
+        {
+            List<Producto> carrito = HttpContext.Session.GetObjectFromJson<List<Producto>>("Carrito") ?? new List<Producto>();
+            var producto = carrito.FirstOrDefault(p => p.idProducto == id);
+
+            if (producto != null)
+            {
+                producto.cantidad = cantidad;
+                HttpContext.Session.SetObjectAsJson("Carrito", carrito);
+            }
+
+            decimal subtotal = producto.precio * producto.cantidad;
+            decimal total = carrito.Sum(p => p.precio * p.cantidad);
+
+            return Json(new { subtotal = subtotal.ToString("0.00"), total = total.ToString("0.00") });
+        }
+
+        public IActionResult EliminarDelCarrito(int id)
+        {
+            List<Producto> carrito = HttpContext.Session.GetObjectFromJson<List<Producto>>("Carrito") ?? new List<Producto>();
+            carrito.RemoveAll(p => p.idProducto == id);
+            
+            HttpContext.Session.SetObjectAsJson("Carrito", carrito);
+            
+            decimal total = carrito.Sum(p => p.precio * p.cantidad);
+            
+            return Json(new { total = total.ToString("0.00") });
         }
     }
 }

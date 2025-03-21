@@ -4,7 +4,67 @@
     ViewData["Title"] = "Tienda";
     var categorias = ViewData["Categorias"] as List<sistemaWeb_ventasOnline.Entidades.Categoria>;
 }
+<style>
+        header {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #F6CF70;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 20px;
+            position: relative;
+        }
+        .menu {
+            display: flex;
+            gap: 30px;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+        }
+			
+        .icons {
+            display: flex;
+            gap: 15px;
+            position: absolute;
+            right: 20px;
+        }
+        .icons a img {
+            width: 24px;
+            height: 24px;
+        }
+        .icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+    </style>
+<header>
+    <div class="navbar">
+    <div class="menu">
+        <a href="#inicio">Inicio</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacto">Contacto</a>
+    </div>
+    <div class="icons">
+        <a href="#facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook"></a>
+        <a href="#instagram"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+        <a href="#carrito" class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M7 18c-1.104 0-2 .897-2 2 0 1.104.896 2 2 2s2-.896 2-2c0-1.103-.896-2-2-2zm10 0c-1.104 0-2 .897-2 2 0 1.104.896 2 2 2s2-.896 2-2c0-1.103-.896-2-2-2zm1.803-4.125l2.453-9.542c.064-.25.014-.515-.14-.721a.981.981 0 0 0-.646-.399l-15.486-1.9-1.366-3.313a1 1 0 0 0-.933-.601h-1a1 1 0 0 0 0 2h.541l1.175 2.845 1.073 2.603-1.928 7.528a1 1 0 0 0 .932 1.25h14.155a1 1 0 0 0 .963-.725zm-13.588-2.125l1.466-5.743 12.374 1.517-1.819 7.078h-11.754l.733-2.852z"></path>
+            </svg>
+        </a>
+    </div>
+</div>
 
+</header>
 <div class="contenedor-tienda">
     <aside class="filtro-categorias">
         <h3>Buscar</h3>
@@ -64,13 +124,48 @@
 </script>
 
 <style>
+    body {
+        background-color: #fff9f2;
+        font-family: 'Arial', sans-serif;
+    }
     .contenedor-tienda {
         display: flex;
+        padding: 20px;
     }
     .filtro-categorias {
         width: 20%;
         padding: 15px;
-        border-right: 1px solid #ddd;
+        border-right: 2px solid #ddd;
+    }
+    .filtro-categorias h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .filtro-categorias input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .filtro-categorias button {
+        background-color: #facc61;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .filtro-categorias ul {
+        list-style: none;
+        padding: 0;
+    }
+    .filtro-categorias ul li a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+        padding: 5px 0;
     }
     .productos {
         width: 80%;
@@ -86,6 +181,32 @@
         padding: 15px;
         border-radius: 10px;
         text-align: center;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+    .producto-card:hover {
+        transform: scale(1.05);
+    }
+    .producto-imagen {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .precio {
+        font-weight: bold;
+        color: #e67e22;
+        font-size: 18px;
+    }
+    .boton-agregar-carrito {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+    .boton-agregar-carrito:hover {
+        background-color: #219150;
     }
 </style>

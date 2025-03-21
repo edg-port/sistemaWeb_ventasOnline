@@ -10,19 +10,38 @@
         <h1>@Model.nombre</h1>
         <p class="precio">$@Model.precio.ToString("0.00")</p>
         <p class="stock">Stock disponible: @Model.cantidad</p>
-    </div>
-</div>
-        <form method="post" action="@Url.Action("FinalizarCompra", "Tienda")">
+        
+        <form method="post" action="@Url.Action("FinalizarCompraDirecta", "Tienda")" onsubmit="return confirmarCompra()">
             <input type="hidden" name="id" value="@Model.idProducto">
             <label for="cantidad">Cantidad:</label>
             <input type="number" name="cantidad" id="cantidad" value="1" min="1" max="@Model.cantidad" class="cantidad-input" required>
             <button type="submit" class="boton-comprar">Finalizar Compra</button>
         </form>
+        
+        <a href="@Url.Action("TiendaProductos", "Tienda")" class="volver">← Seguir comprando</a>
+    </div>
+</div>
+
+<script>
+    function confirmarCompra() {
+        let cantidad = document.getElementById("cantidad").value;
+        return confirm(`¿Confirmar compra de ${cantidad} unidad(es)?`);
+    }
+</script>
+
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff9f2;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
     .compra-container {
         display: flex;
         max-width: 900px;
-        margin: auto;
+        margin: 50px auto;
         padding: 20px;
         gap: 20px;
         align-items: center;
@@ -43,15 +62,10 @@
         text-align: left;
     }
 
-    .categoria {
-        font-size: 16px;
-        color: #999;
-    }
-
     .precio {
         font-size: 24px;
         font-weight: bold;
-        color: #d292a0;
+        color: #e67e22;
     }
 
     .stock {
@@ -72,7 +86,7 @@
         display: block;
         width: 100%;
         padding: 12px;
-        background-color: #e6b8c7;
+        background-color: #27ae60;
         color: white;
         font-size: 16px;
         font-weight: bold;
@@ -85,7 +99,7 @@
     }
 
     .boton-comprar:hover {
-        background-color: #d292a0;
+        background-color: #219150;
     }
 
     .volver {
@@ -94,7 +108,7 @@
         margin-top: 15px;
         font-size: 16px;
         font-weight: bold;
-        color: #d292a0;
+        color: #e67e22;
         text-decoration: none;
     }
 

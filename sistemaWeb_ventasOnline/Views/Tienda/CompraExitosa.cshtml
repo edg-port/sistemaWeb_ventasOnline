@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Compra Exitosa";
+}
+
+<div class="compra-exitosa">
+    <h1>¡Gracias por tu compra!</h1>
+    <p>Tu pedido ha sido procesado correctamente.</p>
+    <a href="@Url.Action("TiendaProductos", "Tienda")" class="boton-volver">Seguir comprando</a>
+</div>
+
+<style>
+    .compra-exitosa {
+        text-align: center;
+        padding: 50px;
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #d292a0;
+    }
+
+    .boton-volver {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #e6b8c7;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .boton-volver:hover {
+        background: #d292a0;
+    }
+</style>

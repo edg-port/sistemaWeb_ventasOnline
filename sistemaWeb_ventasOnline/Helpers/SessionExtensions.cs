@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using MySqlX.XDevAPI;
 using Newtonsoft.Json;
 
 public static class SessionExtensions
